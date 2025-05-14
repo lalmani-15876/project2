@@ -41,7 +41,7 @@ def remove_features(test_df,le):
     test_X = test_df.drop('Activity', axis=1)
     test_y = test_df['Activity']
 
-    testX_dt = test_X[variables.top_dt_cols]
+    testX_dt = test_X[variables.top_dt_col]
     
     test_y = le.transform(test_y)
 

@@ -85,8 +85,8 @@ def log_model(model,X_train, y_train,X_test,y_test,tag,label_encoder):
 
 def evaluate_model(model,X_train, y_train,X_test,  y_test,
                    tag,
-                   P_idle=5.0,    # watts, your CPU’s idle power
-                   P_peak=65.0):   # watts, your CPU’s max power
+                   P_idle=5.0,    
+                   P_peak=65.0): 
     """
     Trains `model` on (X_train, y_train), evaluates on (X_test, y_test),
     and returns timing, CPU usage, estimated energy, and accuracy.
