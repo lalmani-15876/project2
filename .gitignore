@@ -1,0 +1,6 @@
+.venv
+__pycache__
+datasets
+models/70k
+models/60k
+
