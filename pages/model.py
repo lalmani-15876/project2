@@ -2,6 +2,8 @@ import streamlit as st
 from sklearn.model_selection import train_test_split
 import utils.preprocessing as pr
 import utils.project_2 as p2
+import utils.variables as cf
+
 from joblib import dump
 
 def split_train_test(X,y):
@@ -25,7 +27,8 @@ def preprocess_data(train_df):
 
 def top_dt_features(X,y):
     top_10_features = p2.top_10features_from_DT(X,y)
-    # st.write(top_10_features)
+    st.text(top_10_features)
+    cf.top_dt_col = top_10_features
     X_dt = X[top_10_features]
     X_train_dt, X_test_dt, y_train_dt, y_test_dt = split_train_test(X_dt,y)
     return X_train_dt, X_test_dt, y_train_dt, y_test_dt
