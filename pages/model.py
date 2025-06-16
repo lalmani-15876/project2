@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 import utils.preprocessing as pr
 import utils.project_2 as p2
 import utils.variables as cf
-
+import os
 from joblib import dump
 
 st.set_page_config(initial_sidebar_state="collapsed",layout="wide")
@@ -60,6 +60,7 @@ def model_details(_model,X_train, y_train,X_test,y_test,tag,_le):
     # st.pyplot(p2.visualize_shap_per_class(_model, X_train, _le))
 
 def main():
+    os.makedirs("temp", exist_ok=True)
     st.header("Training of Models for Vechical and Activity Mode Detection")
 
     # File upload
