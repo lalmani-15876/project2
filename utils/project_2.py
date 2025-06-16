@@ -10,9 +10,34 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from joblib import load, dump
 import shap
+from scipy.stats import entropy
 import time, psutil
 import utils.preprocessing as pr
 import streamlit as st
+
+def calculate_entropy_for_all_features(df, bins=10):
+    entropy_dict = {}
+
+    for col in df.columns:
+        if pd.api.types.is_numeric_dtype(df[col]):
+            col_data = df[col].dropna()
+
+            if len(col_data) == 0:
+                entropy_dict[col] = np.nan
+                continue
+
+            counts, _ = np.histogram(col_data, bins=bins)
+            probs = counts / counts.sum()
+            probs = probs[probs > 0]
+
+            ent = entropy(probs, base=2)
+            entropy_dict[col] = ent
+        else:
+            probs = df[col].value_counts(normalize=True)
+            ent = entropy(probs, base=2)
+            entropy_dict[col] = ent
+
+    return pd.Series(entropy_dict).sort_values()
 
 def plot_activity_counts(df, activity_column='Activity'):
 
@@ -36,13 +61,25 @@ def split_X_y(agg_df):
     dump(le, 'models/temp/label_encoder.pkl')
     return X,y,le
 
-def top_10features_from_DT(X,y):
+def top_20features_from_DT(X,y):
     dt_model = DecisionTreeClassifier(max_depth=8, random_state=42)
     dt_model.fit(X, y)
     dt_series = pd.Series(dt_model.feature_importances_, index=X.columns)
-    top_dt_cols = dt_series.sort_values(ascending=False).head(10)
+    top_dt_cols = dt_series.sort_values(ascending=False).head(20)
     return top_dt_cols.index
 
+def top_20features_from_CORR(X,y):
+    corr_y = pd.Series(y, name='Activity')
+    df = pd.concat([X, corr_y], axis=1)
+    corr_matrix = df.corr()
+    target_corr = corr_matrix['Activity'].drop('Activity')
+    sorted_corr = target_corr.abs().sort_values(ascending=False)
+    top_20_corr = sorted_corr.head(20)
+    return top_20_corr.index
+
+def top_20features_from_Entropy(X,y):
+    entropies = calculate_entropy_for_all_features(X)
+    return entropies.head(20).index
 
 def initialize_models():
     xgb_model = XGBClassifier(

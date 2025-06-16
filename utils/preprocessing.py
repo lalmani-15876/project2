@@ -36,16 +36,16 @@ def extract_features(df, window_size=120, step_size=30):
 
     return pd.DataFrame(features)
 
-
 def remove_features(test_df,le):
     test_X = test_df.drop('Activity', axis=1)
     test_y = test_df['Activity']
 
     testX_dt = test_X[variables.top_dt_col]
-    
+    testX_en = test_X[variables.top_entropy_col]
+    testX_corr = test_X[variables.top_corr_col]
     test_y = le.transform(test_y)
 
-    return test_X, testX_dt, test_y
+    return test_X, testX_dt, testX_en, testX_corr, test_y
 
 def plot_confusion_matrix(y_true, y_pred, tag, label_encoder):
     class_names = label_encoder.inverse_transform(np.unique(y_pred))
