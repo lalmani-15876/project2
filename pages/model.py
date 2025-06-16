@@ -30,6 +30,7 @@ def preprocess_data(train_df):
 def top_en_features(X,y):
     top_20_features = p2.top_20features_from_Entropy(X,y)
     # st.text(top_20_features)
+    st.image('models/cache/entropy.png')
     # cf.top_entropy_col = top_20_features
     X_en = X[top_20_features]
     X_train_en, X_test_en, y_train_en, y_test_en = split_train_test(X_en,y)
@@ -38,6 +39,7 @@ def top_en_features(X,y):
 def top_corr_features(X,y):
     top_20_features = p2.top_20features_from_CORR(X,y)
     # st.text(top_20_features)
+    st.image('models/cache/corr.png')
     # cf.top_corr_col = top_20_features
     X_corr = X[top_20_features]
     X_train_corr, X_test_corr, y_train_corr, y_test_corr = split_train_test(X_corr,y)
@@ -46,6 +48,7 @@ def top_corr_features(X,y):
 def top_dt_features(X,y):
     top_20_features = p2.top_20features_from_DT(X,y)
     # st.text(top_20_features)
+    st.image('models/cache/dt.png')
     # cf.top_dt_col = top_20_features
     X_dt = X[top_20_features]
     X_train_dt, X_test_dt, y_train_dt, y_test_dt = split_train_test(X_dt,y)
