@@ -3,6 +3,5 @@ __pycache__
 datasets
 models/70k
 models/60k
-models/temp/*.pkl
 models/temp/New folder
 

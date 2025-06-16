@@ -60,7 +60,6 @@ def model_details(_model,X_train, y_train,X_test,y_test,tag,_le):
     # st.pyplot(p2.visualize_shap_per_class(_model, X_train, _le))
 
 def main():
-    os.makedirs("temp", exist_ok=True)
     st.header("Training of Models for Vechical and Activity Mode Detection")
 
     # File upload
