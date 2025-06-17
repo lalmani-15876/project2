@@ -25,6 +25,7 @@ def load_models():
 def preprocess_data(uploaded_file):
     """Process uploaded CSV file"""
     df = pr.laod_csv_data(uploaded_file)
+    st.dataframe(df.drop('Activity',axis=1))
     
     # Perform same preprocessing as training
     processed_df = pr.extract_features(df)
@@ -79,9 +80,9 @@ def main():
                 ['RF FULL', acc_rf_full],
                 ['RF DT', acc_rf_dt],
                 ['RF ENTROPY', acc_rf_en],
-                # ['RF CORR', acc_rf_corr],
+                ['RF CORR', acc_rf_corr],
                 ['XGB FULL', acc_xgb_full],
-                # ['XGB DT', acc_xgb_dt],
+                ['XGB DT', acc_xgb_dt],
                 ['XGB ENTROPY', acc_xgb_en],
                 ['XGB CORR', acc_xgb_corr]
             ], columns=['Model', 'Accuracy'])
